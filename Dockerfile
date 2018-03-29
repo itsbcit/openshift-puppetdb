@@ -1,5 +1,10 @@
 FROM bcit/puppetserver
 
+ENV PUPPETDB_JAVA_ARGS="-Djava.net.preferIPv4Stack=true -Xms256m -Xmx256m"
+ENV PUPPETDB_DATABASE_CONNECTION=//postgres:5432/puppetdb
+ENV PUPPETDB_USER=puppetdb
+ENV PUPPETDB_PASSWORD=puppetdb
+
 RUN yum -y install \
         puppetdb \
  && rm -rf /var/cache/yum
