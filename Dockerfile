@@ -6,6 +6,8 @@ ENV PUPPETDB_DATABASE_CONNECTION=//postgres:5432/puppetdb
 ENV PUPPETDB_USER=puppetdb
 ENV PUPPETDB_PASSWORD=puppetdb
 
+RUN [ -f /docker-entrypoint.d/50-production.sh ] && rm -f /docker-entrypoint.d/50-production.sh
+
 RUN tar zxf /opt/puppetlabs/server.tar.gz -C /opt/puppetlabs
 
 RUN yum -y install \
