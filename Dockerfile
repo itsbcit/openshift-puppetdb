@@ -6,7 +6,7 @@ ENV PUPPETDB_DATABASE_CONNECTION=//postgres:5432/puppetdb
 ENV PUPPETDB_USER=puppetdb
 ENV PUPPETDB_PASSWORD=puppetdb
 
-RUN mv /opt/puppetlabs/skel-server/* /opt/puppetlabs/server/
+RUN tar zxf /opt/puppetlabs/server.tar.gz -C /opt/puppetlabs
 
 RUN yum -y install \
         puppetdb \
@@ -17,14 +17,15 @@ RUN chmod    775 /opt/puppetlabs /etc/puppetlabs \
  && find /opt/puppetlabs /etc/puppetlabs -type d | xargs chmod g+rwx \
  && find /opt/puppetlabs /etc/puppetlabs -type f | xargs chmod g+rw
 
-RUN mv /opt/puppetlabs/server/* /opt/puppetlabs/skel-server/ \
- && chown 0:0 /opt/puppetlabs/server \
- && chmod 775 /opt/puppetlabs/server
+COPY foreground /opt/puppetlabs/server/apps/puppetdb/cli/apps/foreground
+RUN chmod 755 /opt/puppetlabs/server/apps/puppetdb/cli/apps/foreground
+
+RUN tar czf /opt/puppetlabs/server.tar.gz -C /opt/puppetlabs server \
+ && rm -rf /opt/puppetlabs/server \
+ && chown 0:0 /opt/puppetlabs \
+ && chmod 775 /opt/puppetlabs
 
 COPY 10-resolve-userid.sh /docker-entrypoint.d/10-resolve-userid.sh
-
-COPY foreground /opt/puppetlabs/skel-server/apps/puppetdb/cli/apps/foreground
-RUN chmod 755 /opt/puppetlabs/skel-server/apps/puppetdb/cli/apps/foreground
 
 COPY sysconfig-puppetdb /etc/sysconfig/puppetdb
 RUN chmod 775 /etc/sysconfig \
