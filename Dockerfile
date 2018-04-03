@@ -16,11 +16,6 @@ RUN yum -y install \
         puppetdb \
  && rm -rf /var/cache/yum
 
-RUN chmod    775 /opt/puppetlabs /etc/puppetlabs \
- && chown -R 0:0 /opt/puppetlabs /etc/puppetlabs \
- && find /opt/puppetlabs /etc/puppetlabs -type d | xargs chmod g+rwx \
- && find /opt/puppetlabs /etc/puppetlabs -type f | xargs chmod g+rw
-
 COPY foreground /opt/puppetlabs/server/apps/puppetdb/cli/apps/foreground
 RUN chmod 755 /opt/puppetlabs/server/apps/puppetdb/cli/apps/foreground
 
@@ -39,6 +34,11 @@ COPY logging /etc/puppetlabs/puppetdb/logging
 
 RUN rm -rf /etc/puppetlabs/puppetdb/conf.d
 COPY conf.d /etc/puppetlabs/puppetdb/conf.d
+
+RUN chmod    775 /opt/puppetlabs /etc/puppetlabs \
+ && chown -R 0:0 /opt/puppetlabs /etc/puppetlabs \
+ && find /opt/puppetlabs /etc/puppetlabs -type d | xargs chmod 775 \
+ && find /opt/puppetlabs /etc/puppetlabs -type f | xargs chmod 664
 
 EXPOSE 8080 8081
 HEALTHCHECK CMD true
