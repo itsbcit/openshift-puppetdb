@@ -4,5 +4,5 @@ if [ -f /opt/puppetlabs/server/data/puppetserver/.puppetlabs/etc/puppet/ssl/cert
 then
     /opt/puppetlabs/server/bin/puppetdb ssl-setup -f
 else
-    echo "\t *** SSL Certificates missing! ***"
+    echo "    *** SSL Certificates missing! ***"
 fi
