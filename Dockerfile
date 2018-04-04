@@ -19,6 +19,9 @@ RUN yum -y install \
 COPY foreground /opt/puppetlabs/server/apps/puppetdb/cli/apps/foreground
 RUN chmod 755 /opt/puppetlabs/server/apps/puppetdb/cli/apps/foreground
 
+COPY ssl-setup /opt/puppetlabs/server/apps/puppetdb/cli/apps/ssl-setup
+RUN chmod 755 /opt/puppetlabs/server/apps/puppetdb/cli/apps/ssl-setup
+
 RUN tar czf /opt/puppetlabs/server.tar.gz -C /opt/puppetlabs server \
  && rm -rf /opt/puppetlabs/server \
  && chown 0:0 /opt/puppetlabs \
