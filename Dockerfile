@@ -24,7 +24,8 @@ RUN tar czf /opt/puppetlabs/server.tar.gz -C /opt/puppetlabs server \
  && chown 0:0 /opt/puppetlabs \
  && chmod 775 /opt/puppetlabs
 
-COPY 10-resolve-userid.sh /docker-entrypoint.d/10-resolve-userid.sh
+COPY 10-resolve-userid.sh /docker-entrypoint.d/
+COPY 70-ssl-setup.sh /docker-entrypoint.d/
 
 COPY sysconfig-puppetdb /etc/sysconfig/puppetdb
 RUN chmod 775 /etc/sysconfig \
