@@ -44,7 +44,9 @@ RUN chmod    775 /opt/puppetlabs /etc/puppetlabs \
  && find /opt/puppetlabs /etc/puppetlabs -type d | xargs chmod g+rwx \
  && find /opt/puppetlabs /etc/puppetlabs -type f | xargs chmod g+rw
 
+COPY healthcheck-puppetdb.sh /
+RUN chmod 555 /healthcheck-puppetdb.sh
+
 EXPOSE 8080 8081
-HEALTHCHECK CMD true
 
 CMD [ "/opt/puppetlabs/bin/puppetdb", "foreground" ]
