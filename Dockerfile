@@ -1,4 +1,4 @@
-FROM bcit/puppetserver
+FROM bcit/openshift-puppetserver:6.2.1
 
 ENV RUNUSER=puppetdb
 ENV PUPPETDB_JAVA_ARGS="-Xmx192m"
