@@ -30,15 +30,16 @@ RUN tar czf /opt/puppetlabs/server.tar.gz -C /opt/puppetlabs server \
  && chmod 775 /opt/puppetlabs
 
 COPY 70-ssl-setup.sh /docker-entrypoint.d/
+COPY 70-database-config.sh /docker-entrypoint.d/
 
 COPY sysconfig-puppetdb /etc/sysconfig/puppetdb
 RUN chmod 775 /etc/sysconfig \
  && chmod 664 /etc/sysconfig/puppetdb
 
-COPY logging /etc/puppetlabs/puppetdb/logging
+COPY database.ini.template /etc/puppetlabs/puppetdb/conf.d/database.ini
 
-RUN rm -rf /etc/puppetlabs/puppetdb/conf.d
-COPY conf.d /etc/puppetlabs/puppetdb/conf.d
+RUN chown :0  /var/log/puppetlabs/puppetdb \
+ && chmod 770 /var/log/puppetlabs/puppetdb
 
 RUN chmod    775 /opt/puppetlabs /etc/puppetlabs \
  && chown -R 0:0 /opt/puppetlabs /etc/puppetlabs \

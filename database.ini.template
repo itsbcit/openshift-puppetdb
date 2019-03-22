@@ -1,0 +1,13 @@
+[database]
+
+# The database address, i.e. //HOST:PORT/DATABASE_NAME
+subname = PUPPETDB_DATABASE_CONNECTION
+
+# Connect as a specific user
+username = PUPPETDB_USER
+
+# Use a specific password
+password = PUPPETDB_PASSWORD
+
+# How often (in minutes) to compact the database
+# gc-interval = 60
