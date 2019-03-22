@@ -1,7 +1,7 @@
 FROM bcit/puppetserver
 
 ENV RUNUSER=puppetdb
-ENV PUPPETDB_JAVA_ARGS="-Djava.net.preferIPv4Stack=true -Xms256m -Xmx256m"
+ENV PUPPETDB_JAVA_ARGS="-Xmx192m"
 ENV PUPPETDB_DATABASE_CONNECTION=//postgres:5432/puppetdb
 ENV PUPPETDB_USER=puppetdb
 ENV PUPPETDB_PASSWORD=puppetdb
