@@ -37,6 +37,7 @@ RUN chmod 775 /etc/sysconfig \
  && chmod 664 /etc/sysconfig/puppetdb
 
 COPY database.ini.template /etc/puppetlabs/puppetdb/conf.d/database.ini
+COPY jetty.ini /etc/puppetlabs/puppetdb/conf.d/jetty.ini
 
 RUN chown :0  /var/log/puppetlabs/puppetdb \
  && chmod 770 /var/log/puppetlabs/puppetdb
