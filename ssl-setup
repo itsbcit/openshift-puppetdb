@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# MAINTAINERS:
+#   This file was copied and modified to run in the
+#   Docker container here: docker/puppetdb/ssl-setup.sh
+#
+#   If you change this .erb file, consider changing the
+#   .sh version of this file as well.
 
 ssl_command="puppetdb ssl-setup"
 
@@ -167,7 +174,7 @@ function copy_pem_from_puppet {
       exit 1
     fi
   done
-  rm -rf $ssl_dir
+  #rm -rf $ssl_dir
   mkdir -p $ssl_dir
   echo "Copying files: ${orig_ca_file}, ${orig_private_file} and ${orig_public_file} to ${ssl_dir}"
   cp -pr $orig_ca_file $ca_file
@@ -330,9 +337,14 @@ else
 fi
 
 # Fix SSL permissions
-chmod 600 ${ssl_dir}/*
-chmod 700 ${ssl_dir}
-#chown -R ${user}:${group} ${ssl_dir}
+if [ -w ${ssl_dir} ];then
+  chmod 600 ${ssl_dir}/* || /bin/true
+  chmod 700 ${ssl_dir}   || /bin/true
+fi
+
+if [ "$EUID" = "0" ];then
+  chown -R ${user}:${group} ${ssl_dir} || /bin/true
+fi
 
 if [ -f "$jettyfile" ] ; then
   # Check settings are correct and fix or warn
@@ -391,7 +403,7 @@ else
   echo "Error: Unable to find PuppetDB Jetty configuration at ${jettyfile} so unable to provide automatic configuration for that file."
   echo
   echo "   Confirm the file exists in the path specified before running the"
-  echo "   tool again. The file should have been created automatically when" 
+  echo "   tool again. The file should have been created automatically when"
   echo "   the package was installed."
 fi
 
