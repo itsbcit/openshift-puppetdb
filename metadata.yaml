@@ -1,0 +1,9 @@
+---
+image_name: openshift-puppetdb
+version: '6.5.0'
+labels:
+  maintainer: 'jesse_weisner@bcit.ca'
+  puppetdb_version: '6.5.0'
+suffixes:
+  - '6'
+  - '6.5'
