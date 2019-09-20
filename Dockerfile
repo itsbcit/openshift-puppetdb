@@ -1,7 +1,7 @@
-FROM bcit/openshift-puppetserver:6.5.0
+FROM bcit/openshift-puppetserver:6.6.0
 LABEL maintainer="jesse_weisner@bcit.ca"
-LABEL puppetdb_version="6.5.0"
-LABEL build_id="1568393512"
+LABEL puppetdb_version="6.6.0"
+LABEL build_id="1569002275"
 
 ENV RUNUSER=puppetdb
 ENV PUPPETDB_JAVA_ARGS="-Xmx192m"
@@ -16,7 +16,7 @@ RUN [ -f /docker-entrypoint.d/50-production.sh ] && rm -f /docker-entrypoint.d/5
 RUN tar zxf /opt/puppetlabs/server.tar.gz -C /opt/puppetlabs
 
 RUN yum -y install \
-        puppetdb-6.5.0 \
+        puppetdb-6.6.0 \
  && rm -rf /var/cache/yum
 
 RUN userdel puppetdb
